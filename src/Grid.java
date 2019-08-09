@@ -16,8 +16,11 @@ public class Grid {
 	public Grid(String player, String computer ) {
 		this.player = player;
 		this.computer = computer;
-		this.setUpAvailablePositions();
-		System.out.print("Thanks, you are Player => " + this.player + " " + "Computer => " + this.computer);
+		if (this.setUpAvailablePositions()) {
+			System.out.print("Thanks, you are Player => " + this.player + " " + "Computer => " + this.computer);
+		} else {
+			System.out.print("Unable to setup  up grid! please re-run the game");
+		}
 
 	}
 
@@ -31,17 +34,21 @@ public class Grid {
 
 	public boolean insertAtPosition(String player, String position) {
 		boolean posAvaliable = true;
+
 		if(!avaliablePositions.isEmpty()) { // positions available  
+
 			tttGridMap.put(position, player);
 			avaliablePositions.remove(position); // updated available positions
 			this.displayAvailablePositions();
 			if (checkForWinner()) { /// check for winner 
 				posAvaliable = false;
+
 			}
 
 		} else {
 			this.gridIsFull = true;
 			posAvaliable = false;
+
 		}
 
 		return posAvaliable;
@@ -56,16 +63,16 @@ public class Grid {
 	public HashSet<String> findAllAvaliableSpaces(String Position) {
 		return this.avaliablePositions;
 	}
-	
-	
+
+
 	public void displayAvailablePositions() {
-		System.out.println("**Available Positions**" + "\n");
+		System.out.println("** Available Positions **" + "\n");
 
 		Iterator<String> i = this.avaliablePositions.iterator(); 
-        while (i.hasNext()) 
-            System.out.print(i.next() + " "); 
+		while (i.hasNext()) 
+			System.out.print(i.next() + " "); 
 	} 
-	
+
 
 	/**
 	 * Return ttt grid map for computer to process
@@ -99,6 +106,7 @@ public class Grid {
 				this.checkForWInnerPosition(C1, C2, C3) || this.checkForWInnerPosition(A1, B1, C1)|| 
 				this.checkForWInnerPosition(A2, B2, C2)|| this.checkForWInnerPosition(A3, B3, C3)||
 				this.checkForWInnerPosition(A3, B2, C1) || this.checkForWInnerPosition(A1, B2, C3)) {
+
 			return true;
 		} else {
 			return false;
@@ -116,21 +124,28 @@ public class Grid {
 	 */
 	public boolean checkForWInnerPosition(String x, String y, String z) {
 		HashSet<String> checkDuplicateHash = new HashSet<String>(); // removes duplicates
-		checkDuplicateHash.add(x);
-		checkDuplicateHash.add(y);
-		checkDuplicateHash.add(z);
 
-		if((checkDuplicateHash.size() == 1) && (checkDuplicateHash.contains(x))) {
-			this.winner = x;
-			return true;
-		} else {
+		if( x== "" || y == "" || z == "") {
 			return false;
+		} else {
+			
+			checkDuplicateHash.add(x);
+			checkDuplicateHash.add(y);
+			checkDuplicateHash.add(z);
+
+			if((checkDuplicateHash.size() == 1)) {
+
+				this.winner = x;
+				return true;
+			} else {
+				return false;
+			}
 		}
 
 	}
-	
-	public void setUpAvailablePositions() {
-		
+
+	public boolean setUpAvailablePositions() {
+
 		this.avaliablePositions.clear();
 		this.tttGridMap.clear();
 		this.avaliablePositions.add("A1");
@@ -143,7 +158,11 @@ public class Grid {
 		this.avaliablePositions.add("C2");
 		this.avaliablePositions.add("C3");
 
-		
+		if(!avaliablePositions.isEmpty()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 
