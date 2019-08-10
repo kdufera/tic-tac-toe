@@ -16,9 +16,9 @@ public class Grid {
 	public Grid(String player, String computer ) {
 		this.player = player;
 		this.computer = computer;
-		if (this.setUpAvailablePositions()) {
-			System.out.print("Thanks, you are Player => " + this.player + " " + "Computer => " + this.computer);
-		} else {
+		System.out.print("Thanks, you are Player : " + this.player + "  " + "Computer: " + this.computer + "\n" +  "\n");
+
+		if (!this.setUpAvailablePositions()) {
 			System.out.print("Unable to setup  up grid! please re-run the game");
 		}
 
@@ -39,18 +39,15 @@ public class Grid {
 
 			tttGridMap.put(position, player);
 			avaliablePositions.remove(position); // updated available positions
+
 			this.displayAvailablePositions();
 			if (checkForWinner()) { /// check for winner 
 				posAvaliable = false;
-
 			}
-
 		} else {
 			this.gridIsFull = true;
 			posAvaliable = false;
-
 		}
-
 		return posAvaliable;
 	}
 
@@ -64,8 +61,12 @@ public class Grid {
 		return this.avaliablePositions;
 	}
 
+	/**
+	 * Display a list of available positions
+	 */
 
 	public void displayAvailablePositions() {
+
 		System.out.println("** Available Positions **" + "\n");
 
 		Iterator<String> i = this.avaliablePositions.iterator(); 
@@ -128,7 +129,7 @@ public class Grid {
 		if( x== "" || y == "" || z == "") {
 			return false;
 		} else {
-			
+
 			checkDuplicateHash.add(x);
 			checkDuplicateHash.add(y);
 			checkDuplicateHash.add(z);
@@ -143,6 +144,11 @@ public class Grid {
 		}
 
 	}
+	
+	/**
+	 * Method used to reset grid 
+	 * @return
+	 */
 
 	public boolean setUpAvailablePositions() {
 
@@ -159,13 +165,11 @@ public class Grid {
 		this.avaliablePositions.add("C3");
 
 		if(!avaliablePositions.isEmpty()) {
+			this.displayAvailablePositions();
 			return true;
 		} else {
 			return false;
 		}
 	}
-
-
-
 
 }

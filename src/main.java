@@ -17,17 +17,10 @@ public class main {
 				continue;
 
 			} else {
-				//System.out.println("Great, you are now player " + userInput);
+
 				String computer = (userInput.equals("X")) ? "O": "X";
-
 				Grid tttGrid = new Grid(userInput,computer);
-				
 				ComputerBrain compBrain = new ComputerBrain(computer); // Instantiate computer brain
-
-				String test = compBrain.checkForRiskOnAllPositions("X", "" , "O", "A", "B", "C");
-				System.out.println("  *******  " + test);
-
-				
 				while(true) { // move
 					System.out.println("\n");
 					System.out.println("Where do you want to move ?");
@@ -37,40 +30,46 @@ public class main {
 						System.out.println(" ** Invalid Positin! **");
 						continue;
 					} else {
-						
+
 						System.out.println("You Selected: " + inputMove + "\n");					
 						if(!tttGrid.avaliablePositions.isEmpty()  && tttGrid.insertAtPosition(tttGrid.player, inputMove)) {
-						
-							String compMove = compBrain.SelectPosition(tttGrid.tttGridMap, tttGrid.avaliablePositions);
-							System.out.println("Computer Selected: " + compMove + "\n");
+							if(!tttGrid.avaliablePositions.isEmpty()) {
+								String compMove = compBrain.SelectPosition(tttGrid.tttGridMap, tttGrid.avaliablePositions);
+								System.out.println( "\n" + "\n" + "Computer Selected: " + compMove + "\n");
 
-							if(!tttGrid.avaliablePositions.isEmpty()  &&  tttGrid.insertAtPosition(tttGrid.computer, compMove)) {
-								continue;
-							} else {
-								if(tttGrid.gridIsFull) {
-									System.out.println(" Grid is full. Restaring the Game!");
-									tttGrid.setUpAvailablePositions();
-								} 
 
-								if(tttGrid.winner != "") {
-									if(tttGrid.winner.equals(tttGrid.player)) {
-										System.out.println("\n" + "\n" + "*** Congrats! Your are the winner ***" + "\n" + "\n");
-										System.out.println("*** Re-setting the grid for a new game! **" );
+								if(!tttGrid.avaliablePositions.isEmpty()  &&  tttGrid.insertAtPosition(tttGrid.computer, compMove)) {
+									continue;
+								} else {
+									if(tttGrid.gridIsFull) {
+										System.out.println(" Grid is full. Restaring the Game!");
 										tttGrid.setUpAvailablePositions();
+									} 
+
+									if(tttGrid.winner != "") {
+										if(tttGrid.winner.equals(tttGrid.player)) {
+											System.out.println("\n" + "\n" + "*** Congrats! Your are the winner ***" + "\n" + "\n");
+											System.out.println("\n");
+											System.out.println("*** Re-setting the grid for a new game! **" + "\n" + "\n" );
+											tttGrid.setUpAvailablePositions();
+
+										} else {
+											System.out.println( "\n" + "*** Computer Wins! Please try again! ***" + "\n" + "\n");
+											System.out.println("\n");
+											System.out.println("*** Re-setting the grid for a new game! ***" + "\n" + "\n" );
+
+											tttGrid.setUpAvailablePositions();
+										}
 
 									} else {
-										System.out.println( "\n" + " *** Computer Wins! Please try again! ***: ");
-										System.out.println("*** Re-setting the grid for a new game! ***" );
-
-										tttGrid.setUpAvailablePositions();
+										continue;
 									}
-
-									//								System.out.println(" ***The Winner is ****: " + tttGrid.winner);
-								} else {
-									continue;
 								}
+							} else {
+								System.out.println(" Grid is full. Restaring the Game!");
+								tttGrid.setUpAvailablePositions();
 							}
-							
+
 						} else {
 							if(tttGrid.gridIsFull) {
 								System.out.println(" Grid is full. Restaring the Game!");
@@ -80,43 +79,34 @@ public class main {
 							if(tttGrid.winner != "") {
 								if(tttGrid.winner.equals(tttGrid.player)) {
 									System.out.println("\n" + "\n" + "*** Congrats! Your are the winner ***" + "\n" + "\n");
-									System.out.println("*** Re-setting the grid for a new game! **" );
+									System.out.println("*** Re-setting the grid for a new game! **" + "\n" + "\n");
 									tttGrid.setUpAvailablePositions();
 
 								} else {
-									System.out.println( "\n" + " *** Computer Wins! Please try again! ***: ");
-									System.out.println("*** Re-setting the grid for a new game! ***" );
+									System.out.println( "\n" + " *** Computer Wins! Please try again! ***"+ "\n" + "\n");
+									System.out.println("*** Re-setting the grid for a new game! ***"+ "\n" + "\n" );
 
 									tttGrid.setUpAvailablePositions();
 								}
 
-								//								System.out.println(" ***The Winner is ****: " + tttGrid.winner);
 							} else {
 								continue;
 							}
 						}
 
-
-
-						//						System.out.println( tttGrid.checkForWInnerPosition("X", "X", "X") + "  Checking for winner");
-						//						System.out.println("The winner is " + tttGrid.winner);
-
-
-
-
-
-
 						continue;
-
-
-
-
 					}
 				}
 
 			}
 		}
 	}
+
+	/**
+	 * Method used to validate valid Positions
+	 * @param position
+	 * @return
+	 */
 
 	public static boolean isValidPosition (String position ) {
 		HashSet<String> validPositions = new HashSet<String>();
