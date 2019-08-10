@@ -23,7 +23,7 @@ public class ComputerBrain {
 
 		return position;
 	}
-	
+
 	/**
 	 * Method used to analyze and plan grid move position
 	 * @param currenGridInfo
@@ -34,22 +34,26 @@ public class ComputerBrain {
 	public String analyzeGridPosition(HashMap<String,String> currenGridInfo, HashSet<String> availiblePositions) {
 		String finalPosition = "";
 
-		finalPosition = this.analyzeGridDefensePosition(currenGridInfo, availiblePositions);
+		finalPosition = analyzeGridAttackPosition(currenGridInfo, availiblePositions);
+		if (finalPosition == "") {
+			finalPosition = this.analyzeGridDefensePosition(currenGridInfo, availiblePositions);
 
-		if(finalPosition == "") { // return random item from the list of position
-			int size = availiblePositions.size();
-			int item = new Random().nextInt(size); 
-			int i = 0;
-			for(Object obj : availiblePositions)
-			{
-				if (i == item)
-					finalPosition = (String) obj;
-				i++;
-			} 
+			if(finalPosition == "") { // return random item from the list of position (last and final move)
+				int size = availiblePositions.size();
+				int item = new Random().nextInt(size); 
+				int i = 0;
+				for(Object obj : availiblePositions)
+				{
+					if (i == item)
+						finalPosition = (String) obj;
+					i++;
+				} 
+			}
 		}
+
 		return finalPosition;
 	}
-	
+
 	/**
 	 * Method used to analyze grid defense positions
 	 * @param currenGridInfo
@@ -118,8 +122,6 @@ public class ComputerBrain {
 				positionAtRisk = (x != "" && y!= "" && z == "" && this.playerType != x && this.playerType != y)? posC :"";
 			}
 		}
-		
-		//System.out.println("\n" + "******Checking for " + posA  + " : " + posB + " : " + posC  + " Risk position: " + positionAtRisk );
 
 		return positionAtRisk;
 	}
@@ -131,7 +133,7 @@ public class ComputerBrain {
 	 * @return
 	 */
 	public String analyzeGridAttackPosition(HashMap<String,String> currenGridInfo, HashSet<String> availiblePositions) {
-		String defensePosition = "";
+		String attackPosition = "";
 		String A1 = (currenGridInfo.get("A1") != null)? currenGridInfo.get("A1"):"";
 		String A2 = (currenGridInfo.get("A2") != null)? currenGridInfo.get("A2"):"";
 		String A3 = (currenGridInfo.get("A3") != null)? currenGridInfo.get("A3"):"";
@@ -142,22 +144,46 @@ public class ComputerBrain {
 		String C2 = (currenGridInfo.get("C2") != null)? currenGridInfo.get("C2"):"";
 		String C3 = (currenGridInfo.get("C3") != null)? currenGridInfo.get("C3"):"";
 
-		return defensePosition;
+		attackPosition = this.checkForAttackPositions(A1, A2, A3, "A1", "A2", "A3");	
+		if(attackPosition == "") {
+			attackPosition = this.checkForAttackPositions(C1, C2, C3, "C1", "C2", "C3");
+			if(attackPosition == "") {
+				attackPosition = this.checkForAttackPositions(A1, B1, C1, "A1", "B1", "C1");
+				if(attackPosition == "") {
+					attackPosition = this.checkForAttackPositions(A2, B2, C2, "A2", "B2", "C2");
+					if(attackPosition == "") {
+						attackPosition = this.checkForAttackPositions(A3, B3, C3, "A3", "B3", "C3");
+						if(attackPosition == "") {
+							attackPosition = this.checkForAttackPositions(A3, B2, C1, "A3", "B2", "C1");
+							if(attackPosition == "") {
+								attackPosition = this.checkForAttackPositions(A1, B2, C3, "A1", "B2", "C3");
+								if(attackPosition == "") {
+									attackPosition = this.checkForAttackPositions(B1, B2, B3, "B1", "B2", "B3");
+									if (attackPosition == "") {
+										attackPosition = this.checkForAttackPositions(C1, C2, C3, "C1", "C2", "C3");
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return attackPosition;
 
 	}
-	
+
 	public String checkForAttackPositions(String x, String y, String z, String posA, String posB, String posC) {
 		String positionAtRisk = "";
 
-		positionAtRisk = (y != "" && z!= "" && x == "" && this.playerType != y && this.playerType != z)? posA : "";
+		positionAtRisk = (y != "" && z!= "" && x == "" && this.playerType == y && this.playerType == z)? posA : "";
 		if(positionAtRisk == "") {
-			positionAtRisk = (x != "" && z!= "" && y == "" && this.playerType != x && this.playerType != z)? posB:"";
+			positionAtRisk = (x != "" && z!= "" && y == "" && this.playerType == x && this.playerType == z)? posB:"";
 			if (positionAtRisk == "") {
-				positionAtRisk = (x != "" && y!= "" && z == "" && this.playerType != x && this.playerType != y)? posC :"";
+				positionAtRisk = (x != "" && y!= "" && z == "" && this.playerType == x && this.playerType == y)? posC :"";
 			}
 		}
-		//		System.out.println("\n" + "******Checking for " + posA  + " : " + posB + " : " + posC  + " Risk position: " + positionAtRisk );
-
 		return positionAtRisk;
 	}
 }
