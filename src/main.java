@@ -31,11 +31,11 @@ public class main {
 					} else {
 
 						System.out.println("You Selected: " + inputMove + "\n");					
-						if(!tttGrid.avaliablePositions.isEmpty()  && tttGrid.insertAtPosition(tttGrid.player, inputMove)) { // player move
-							if(!tttGrid.avaliablePositions.isEmpty()) {
-								String compMove = compBrain.SelectPosition(tttGrid.tttGridMap, tttGrid.avaliablePositions);
+						if(!tttGrid.findAllAvaliableSpaces().isEmpty()  && tttGrid.insertAtPosition(tttGrid.player, inputMove)) { // player move
+							if(!tttGrid.findAllAvaliableSpaces().isEmpty()) {
+								String compMove = compBrain.SelectPosition(tttGrid.gridInfo(), tttGrid.findAllAvaliableSpaces());
 								System.out.println( "\n" + "\n" + "Computer Selected: " + compMove + "\n");
-								if(!tttGrid.avaliablePositions.isEmpty() && tttGrid.insertAtPosition(tttGrid.computer, compMove)) { // computer move
+								if(!tttGrid.findAllAvaliableSpaces().isEmpty() && tttGrid.insertAtPosition(tttGrid.computer, compMove)) { // computer move
 									continue;
 								} else {
 									if(tttGrid.gridIsFull) {
@@ -45,17 +45,16 @@ public class main {
 
 									if(tttGrid.winner != "") {
 										if(tttGrid.winner.equals(tttGrid.player)) {
-											System.out.println("\n" + "\n" + "*** Congrats! Your are the winner ***" + "\n" + "\n");
+											System.out.println("\n" + "\n" + "--- Congrats! Your are the winner ---" + "\n" + "\n");
 											System.out.println("\n");
-											System.out.println("*** Re-setting the grid for a new game! **" + "\n" + "\n" );
+											System.out.println("--- Re-setting the grid for a new game! ---" + "\n" + "\n" );
 											tttGrid.setUpAvailablePositions();
 //											scanner.close(); //TODO: Might need to close the scanner but the game runs continuously by reseting
 											// the grid after every game. (Not sure if this is a requirement) 
 
 										} else {
-											System.out.println( "\n" + "*** Computer Wins! Please try again! ***" + "\n" + "\n");
-											System.out.println("\n");
-											System.out.println("*** Re-setting the grid for a new game! ***" + "\n" + "\n" );
+											System.out.println( "\n" + "\n" + " --- Computer Wins! Please try again! ---" + "\n" + "\n");
+											System.out.println("--- Re-setting the grid for a new game! ---" + "\n" + "\n" );
 											tttGrid.setUpAvailablePositions();
 //											scanner.close();
 										}
@@ -65,27 +64,27 @@ public class main {
 									}
 								}
 							} else {
-								System.out.println(" Grid is full. Restaring the Game!" + "\n" + "\n");
+								System.out.println(" ---- Grid is full. Restaring the Game! ---" + "\n" + "\n");
 								tttGrid.setUpAvailablePositions();
 							}
 
 						} else {
 							if(tttGrid.gridIsFull) {
-								System.out.println(" Grid is full. Restaring the Game!" + "\n" + "\n");
+								System.out.println("--- Grid is full. Restaring the Game! ---" + "\n" + "\n");
 								tttGrid.setUpAvailablePositions();
 //								scanner.close();
 							} 
 
 							if(tttGrid.winner != "") {
 								if(tttGrid.winner.equals(tttGrid.player)) {
-									System.out.println("\n" + "\n" + "*** Congrats! Your are the winner ***" + "\n" + "\n");
+									System.out.println("\n" + "\n" + "--- Congrats! Your are the winner ---" + "\n" + "\n");
 									System.out.println("*** Re-setting the grid for a new game! **" + "\n" + "\n");
 									tttGrid.setUpAvailablePositions();
 //									scanner.close();
 
 								} else {
-									System.out.println( "\n" + " *** Computer Wins! Please try again! ***"+ "\n" + "\n");
-									System.out.println("*** Re-setting the grid for a new game! ***"+ "\n" + "\n" );
+									System.out.println( "\n" + " ---- Computer Wins! Please try again! ---"+ "\n" + "\n");
+									System.out.println("--- Re-setting the grid for a new game! ---"+ "\n" + "\n" );
 									tttGrid.setUpAvailablePositions();
 //									scanner.close();
 								}

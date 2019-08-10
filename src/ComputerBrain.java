@@ -4,10 +4,20 @@ import java.util.Random;
 
 public class ComputerBrain {
 
-	String playerType;
+	private String playerType;
 
 	public ComputerBrain(String playerType) {
 		this.playerType = playerType;
+	}
+	
+	
+	/**
+	 * Get Player type 
+	 * @return
+	 */
+	
+	public String getPlayerType() {
+		return this.playerType;
 	}
 
 
@@ -18,10 +28,7 @@ public class ComputerBrain {
 	 * @return
 	 */
 	public String SelectPosition(HashMap<String,String> currenGridInfo, HashSet<String> availiblePositions) {
-		String position = "";
-		position =  this.analyzeGridPosition(currenGridInfo, availiblePositions);
-
-		return position;
+		return this.analyzeGridPosition(currenGridInfo, availiblePositions);
 	}
 
 	/**
@@ -171,7 +178,6 @@ public class ComputerBrain {
 		}
 
 		return attackPosition;
-
 	}
 
 	public String checkForAttackPositions(String x, String y, String z, String posA, String posB, String posC) {

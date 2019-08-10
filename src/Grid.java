@@ -10,8 +10,8 @@ public class Grid {
 	static String winner = "";
 	static boolean gridIsFull = false;
 
-	HashMap<String, String> tttGridMap = new HashMap<String, String>();
-	HashSet<String> avaliablePositions = new HashSet<String>(); // track available positions 
+	private HashMap<String, String> tttGridMap = new HashMap<String, String>();
+	private HashSet<String> avaliablePositions = new HashSet<String>(); 
 
 	public Grid(String player, String computer ) {
 		this.player = player;
@@ -21,7 +21,6 @@ public class Grid {
 		if (!this.setUpAvailablePositions()) {
 			System.out.print("Unable to setup  up grid! please re-run the game");
 		}
-
 	}
 
 	/**
@@ -57,7 +56,7 @@ public class Grid {
 	 * @return
 	 */
 
-	public HashSet<String> findAllAvaliableSpaces(String Position) {
+	public HashSet<String> findAllAvaliableSpaces() {
 		return this.avaliablePositions;
 	}
 
