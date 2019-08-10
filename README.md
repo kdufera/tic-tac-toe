@@ -4,7 +4,7 @@ This is an implementation of tic_tac_toe game. The game lets users play against 
 Prerequisites:
 * you mus have Java installed on your machine.
 
-** Running the program via terminal:
+Running the program via terminal:
 * Clone the repository.
 * Navigate to "/src".
 * Run 'Javac main.java' to compile 
