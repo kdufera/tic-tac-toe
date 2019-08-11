@@ -1,6 +1,13 @@
 # tic_tac_toe
 This is an implementation of tic_tac_toe game. The game lets users play against the computer.
 
+Grid 
+
+  |_A__|_B__|_C__|
+1 |____|____|____|
+2 |____|____|____|
+3 |____|____|____|
+
 Prerequisites:
 * you mus have Java installed on your machine.
 
