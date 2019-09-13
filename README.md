@@ -1,5 +1,5 @@
 # tic_tac_toe
-This is an implementation of tic_tac_toe game. The game lets users play against the computer.
+This is an implementation of tic_tac_toe game.
 
 Prerequisites:
 * you mus have Java installed on your machine.
