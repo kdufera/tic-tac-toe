@@ -1,4 +1,4 @@
-# tic_tac_toe
+# tic-tac-toe
 This is an implementation of tic tac toe game.
 
 Prerequisites:
